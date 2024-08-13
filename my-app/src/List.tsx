@@ -1,8 +1,8 @@
-/* my-app/src/List.tsx */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Item from './Item';
-import './List.css';
+import { Container, Grid, TextField, Button, Box } from '@mui/material';
+
 
 const List: React.FC = () => {
     const [items, setItems] = useState<{ isActive: boolean; description: string }[]>([]);
@@ -32,26 +32,38 @@ const List: React.FC = () => {
     };
 
     return (
-        <div className="list-container">
-            {items.map((item, index) => (
-                <Item
-                    key={index}
-                    isActive={item.isActive}
-                    description={item.description}
-                    id={index}
-                />
-            ))}
-            <div className="add-item-container">
-                <input
-                    type="text"
-                    value={newDescription}
-                    onChange={(e) => setNewDescription(e.target.value)}
-                    placeholder="Enter description"
-                    className="add-item-input"
-                />
-                <button className="add-item-button" onClick={() => addItem(newDescription)}>+</button>
-            </div>
-        </div>
+        <Container>
+            <Grid container spacing={2}>
+                {items.map((item, index) => (
+                    <Grid item xs={12} sm={6} md={4} key={index}>
+                        <Item
+                            isActive={item.isActive}
+                            description={item.description}
+                            id={index}
+                        />
+                    </Grid>
+                ))}
+                <Grid item xs={12}>
+                    <Box display="flex" justifyContent="center" alignItems="center">
+                        <TextField
+                            label="Enter description"
+                            variant="outlined"
+                            value={newDescription}
+                            onChange={(e) => setNewDescription(e.target.value)}
+                            fullWidth
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => addItem(newDescription)}
+                            style={{ marginLeft: '10px' }}
+                        >
+                            +
+                        </Button>
+                    </Box>
+                </Grid>
+            </Grid>
+        </Container>
     );
 };
 

@@ -1,6 +1,6 @@
-/* my-app/src/Item.tsx */
 import React, { useState } from "react";
 import axios from "axios";
+import { Card, CardContent, Checkbox, TextField, Button, Box, Typography } from '@mui/material';
 import './Item.css';
 
 interface ItemProps {
@@ -64,32 +64,33 @@ const Item: React.FC<ItemProps> = ({ id, isActive, description }) => {
     };
 
     return (
-        <div className="item-container">
-            <div className="item-content">
-                <input
-                    type="checkbox"
-                    checked={!isActiveState}
-                    onChange={handleCheckboxChange}
-                    className="custom-checkbox"
-                />
-                {isEditing ? (
-                    <input
-                        type="text"
-                        value={descriptionState}
-                        onChange={handleDescriptionChange}
-                        className="item-editing-input"
+        <Card>
+            <CardContent>
+                <Box display="flex" alignItems="center">
+                    <Checkbox
+                        checked={!isActiveState}
+                        onChange={handleCheckboxChange}
                     />
-                ) : (
-                    <p className="description-input">{descriptionState}</p>
-                )}
-            </div>
-            <div className="item-buttons">
-                <button onClick={handleEdit} className="item-button edit">
-                    {isEditing ? 'Save' : 'Edit'}
-                </button>
-                <button onClick={handleDelete} className="item-button delete">Delete</button>
-            </div>
-        </div>
+                    {isEditing ? (
+                        <TextField
+                            value={descriptionState}
+                            onChange={handleDescriptionChange}
+                            fullWidth
+                        />
+                    ) : (
+                        <Typography variant="body1">{descriptionState}</Typography>
+                    )}
+                </Box>
+                <Box display="flex" justifyContent="space-between" mt={2}>
+                    <Button onClick={handleEdit} variant="contained" color="primary">
+                        {isEditing ? 'Save' : 'Edit'}
+                    </Button>
+                    <Button onClick={handleDelete} variant="contained" color="secondary">
+                        Delete
+                    </Button>
+                </Box>
+            </CardContent>
+        </Card>
     );
 }
 
