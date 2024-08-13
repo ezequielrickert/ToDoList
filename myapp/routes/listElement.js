@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const listElements = [{id: 0, isActive: true, description: 'Element 1'}, {id: 1, isActive: false, description: 'Element 2'}];
+const listElements = [];
 
 router.post('/', (req, res) => {
     listElements.push(req.body);
