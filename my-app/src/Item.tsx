@@ -13,6 +13,7 @@ const Item: React.FC<ItemProps> = ({ id, isActive, description }) => {
     const [isActiveState, setIsActive] = useState<boolean>(isActive);
     const [descriptionState, setDescriptionState] = useState<string>(description);
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const defaultListId = 1;
 
     const handleCheckboxChange = () => {
         const newStatus = !isActiveState;
@@ -21,7 +22,8 @@ const Item: React.FC<ItemProps> = ({ id, isActive, description }) => {
         axios.put(`http://localhost:8080/listElement/${id}`, {
             id: id,
             isActive: newStatus,
-            description: descriptionState
+            description: descriptionState,
+            list: defaultListId
         })
             .then(r => {
                 console.log(r.data);

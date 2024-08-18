@@ -5,8 +5,9 @@ import { Container, Grid, TextField, Button, Box } from '@mui/material';
 
 
 const List: React.FC = () => {
-    const [items, setItems] = useState<{ isActive: boolean; description: string }[]>([]);
+    const [items, setItems] = useState<{ isActive: boolean; description: string, id: number }[]>([]);
     const [newDescription, setNewDescription] = useState<string>('');
+    const defaultListId = 1;
 
     useEffect(() => {
         axios.get('http://localhost:8080/listElement')
@@ -20,10 +21,9 @@ const List: React.FC = () => {
     }, []);
 
     const addItem = (description: string) => {
-        const newItem = { isActive: true, description };
+        const newItem = { isActive: true, description: description, list: defaultListId };
         axios.post('http://localhost:8080/listElement', newItem)
             .then(response => {
-                setItems([...items, newItem]);
                 window.location.reload();
             })
             .catch(error => {
@@ -39,7 +39,7 @@ const List: React.FC = () => {
                         <Item
                             isActive={item.isActive}
                             description={item.description}
-                            id={index}
+                            id={item.id}
                         />
                     </Grid>
                 ))}
